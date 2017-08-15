@@ -34,6 +34,19 @@ git clone --depth 1 https://github.com/phuslu/go
 
 export PATH=$PATH:~/workspace/goproxy/go/bin
 ```
+- 编译 bogo
+```bash
+git clone https://github.com/google/boringssl $GOPATH/src/github.com/google/boringssl
+
+cd $GOPATH/src/github.com/google/boringssl/ssl/test/runner
+sed -i -E 's#"./(curve25519|poly1305)"#"golang.org/x/crypto/\1"#g' *.go
+sed -i -E 's#"./(ed25519)"#"github.com/google/boringssl/ssl/test/runner/\1"#g' *.go
+sed -i -E 's#"./(internal/edwards25519)"#"github.com/google/boringssl/ssl/test/runner/ed25519/\1"#g' ed25519/*.go
+git commit -m "change imports" -s -a
+
+go get -x github.com/google/boringssl/ssl/test/runner
+```
+
 - 编译 goproxy
 ```bash
 git clone https://github.com/phuslu/goproxy
