@@ -6,7 +6,7 @@ GoProxy 对 golang 周边库做了一些修改。具体的改动请见，
 1. https://github.com/phuslu/net
 1. https://github.com/phuslu/glog
 
-所以编译需要从 golang 工具链开始编译, 以下步骤都假设你的工作目录位于 ~/workspace/goproxy/
+所以编译需要从 golang 工具链开始编译, 以下步骤都假设你的工作目录位于 ~/workspace/goproxy/, 编译需要linux系统，比如ubuntu，osx 不兼容
 
 - 保证系统安装了如下工具 awk/git/tar/bzip2/xz/7za/gcc/make/sha1sum/timeout/xargs，检查命令：
 ```bash
@@ -20,19 +20,21 @@ done
 ```
 - 编译 golang 工具链
 ```bash
-export GOROOT_BOOTSTRAP=~/workspace/goproxy/goroot_bootstrap
-export GOROOT=~/workspace/goproxy/go
-export GOPATH=~/workspace/goproxy/gopath
+export BUILD_ROOT=~/workspace/goproxy
+export GOROOT_BOOTSTRAP=${BUILD_ROOT}/goroot_bootstrap
+export GOROOT=${BUILD_ROOT}/go
+export GOPATH=${BUILD_ROOT}/gopath
 
-cd ~/workspace/goproxy/
+cd ${BUILD_ROOT}
 
+#注：如果google被墙或者速度慢，可以加-x设置代理，比如curl -x 127.0.0.1:8087 -k https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar xz
 curl -k https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar xz
 mv go goroot_bootstrap
 
 git clone --depth 1 https://github.com/phuslu/go
 (cd go/src && bash ./make.bash)
 
-export PATH=$PATH:~/workspace/goproxy/go/bin
+export PATH=$PATH:${BUILD_ROOT}/go/bin
 ```
 - 编译 bogo
 ```bash
@@ -49,6 +51,7 @@ go get -x github.com/google/boringssl/ssl/test/runner
 
 - 编译 goproxy
 ```bash
+cd ${BUILD_ROOT}
 git clone https://github.com/phuslu/goproxy
 cd goproxy
 git checkout master
@@ -67,6 +70,7 @@ go build -v
 ```
 - 交叉编译+打包 goproxy
 ```bash
+#GOOS可以是windows，darwin等，GOARCH可以是amd64（64位）或者386（32位）
 GOOS=windows GOARCH=amd64 ./make.bash
 ```
 - 一键编译 GoProxy
