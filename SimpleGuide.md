@@ -11,4 +11,4 @@
   * 下载 goproxy 正式版 [https://git.io/goproxy](https://github.com/phuslu/goproxy/releases), 复制 gae.json 为 gae.user.json 并填入部署完成的 appid
   * Windows 用户推荐使用 goproxy-gui.exe 托盘图标设置 IE 代理(对其它浏览器也有效)。
   * Chrome/Firefox/Opera 请安装 [SwitchyOmega](https://github.com/FelisCatus/SwitchyOmega/releases) 插件
-  * 出现连接不上的情况可以尝试使用 [MotherFuckerFang](https://github.com/phuslu/goproxy/issues/654) 测速。
+  * 出现连接不上的情况可以尝试使用 [gscan_quic](https://github.com/Kisesy/gscan_quic) 测速。
